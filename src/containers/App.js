@@ -3,7 +3,7 @@ import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 
 class App extends Component {
-  state = {
+state = {
     persons: [
       { id: 'asfa1', name: 'Max', age: 28 },
       { id: 'vasdf1', name: 'Manu', age: 29 },
@@ -11,11 +11,13 @@ class App extends Component {
     ],
     otherState: 'some other value',
     showPersons: false
-  }
+  } 
+  
 
-  nameChangedHandler = ( event, id ) => {
+
+  nameChangedHandler = (event, id ) => {
     const personIndex = this.state.persons.findIndex(p => {
-      return p.userId === id;
+      return p.Id === id;
     });
 
     const person = {
@@ -31,8 +33,8 @@ class App extends Component {
   }
 
   deletePersonHandler = (personIndex) => {
-    // const persons = this.state.persons.slice();
-    const persons = [...this.state.persons];
+     const persons = this.state.persons.slice();
+    //const persons = [...this.state.persons];
     persons.splice(personIndex, 1);
     this.setState({persons: persons});
   }
@@ -49,11 +51,11 @@ class App extends Component {
     if ( this.state.showPersons ) {
       persons = (
         <div>
-          {this.state.persons.map((person, index) => {
-            return <Persons clicked={() => this.deletePersonHandler(index)}
-                    changed={(event) => this.nameChangedHandler(event, person.id)} 
+          
+            <Persons clicked={this.deletePersonHandler}
+                    changed={this.nameChangedHandler} 
                     persons={this.state.persons} />
-          })}
+          
         </div>
       );
 btnClass = classes.red;
