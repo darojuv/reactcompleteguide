@@ -4,15 +4,27 @@ import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 
 class App extends Component {
-state = {
-    persons: [
-      { id: 'asfa1', name: 'Max', age: 28 },
-      { id: 'vasdf1', name: 'Manu', age: 29 },
-      { id: 'asdf11', name: 'Stephanie', age: 26 }
-    ],
-    otherState: 'some other value',
-    showPersons: false
-  } 
+  constructor(props){
+    super(props);
+    this.state = {
+      persons: [
+        { id: 'asfa1', name: 'Max', age: 28 },
+        { id: 'vasdf1', name: 'Manu', age: 29 },
+        { id: 'asdf11', name: 'Stephanie', age: 26 }
+      ],
+      otherState: 'some other value',
+      showPersons: false
+    } 
+  console.log('[App.js] in side Constructor', props);
+  }
+  componentWillMount()
+  {
+    console.log('[App.js] inside componenetWillMount()');
+  }
+  componentDidMount()
+  {
+    console.log('[App.js] inside componenetDidMount()');
+  }
   
   nameChangedHandler = (event, id ) => {
     const personIndex = this.state.persons.findIndex(p => {
@@ -41,6 +53,7 @@ state = {
   }
 
   render () {
+    console.log('[App.js] inside render()');
 
     let persons = null;
 
@@ -60,6 +73,7 @@ state = {
       <Cockpit showPersons={this.state.showPersons} 
       persons={this.state.persons} 
       Click={this.togglePersonsHandler}
+      appTitle={this.props.title}
       />
         {persons}
       </div>
