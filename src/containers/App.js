@@ -27,10 +27,8 @@ class App extends Component {
   }
   shouldComponentUpdate(nextProps, nextState){
     console.log('[UPDATE App.js] Insde shouldComponentUpdate', nextProps, nextState);
-    //return true;
-    return nextProps.persons !== this.props.persons ||
-            nextProps.changed !== this.props.changed ||
-            nextProps.clicked !== this.props.clicked;
+    return nextState.showPersons !== this.props.showPersons ||
+    nextState.persons !== this.state.persons;
   }
   
   componentWillUpdate(nextProps, nextState){
@@ -80,7 +78,7 @@ class App extends Component {
       );
 
     }
-
+console.log('from asdf: ' + persons);
     return (
       <div className={classes.App}>
       <button onClick={() => {this.setState({showPersons: true})}} >Show Persons</button>
