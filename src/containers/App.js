@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
-import Cockpit from '../components/Cockpit/Cockpit';
+import React, { PureComponent } from 'react';
+
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/Cockpit/Cockpit';
+import withClass from '../hoc/withClass';
+import Aux from '../hoc/Aux';
 
-class App extends Component {
-  constructor(props){
-    super(props);
+class App extends PureComponent {
+  constructor( props ) {
+    super( props );
+    console.log( '[App.js] Inside Constructor', props );
     this.state = {
       persons: [
         { id: 'asfa1', name: 'Max', age: 28 },
@@ -14,48 +18,65 @@ class App extends Component {
       ],
       otherState: 'some other value',
       showPersons: false
-    } 
-  console.log('[App.js] in side Constructor', props);
+    };
   }
-  componentWillMount()
-  {
-    console.log('[App.js] inside componenetWillMount()');
+
+  componentWillMount () {
+    console.log( '[App.js] Inside componentWillMount()' );
   }
-  componentDidMount()
-  {
-    console.log('[App.js] inside componenetDidMount()');
+
+  componentDidMount () {
+    console.log( '[App.js] Inside componentDidMount()' );
   }
-  shouldComponentUpdate(nextProps, nextState){
-    console.log('[UPDATE App.js] Insde shouldComponentUpdate', nextProps, nextState);
-    return nextState.showPersons !== this.props.showPersons ||
-    nextState.persons !== this.state.persons;
+
+  // shouldComponentUpdate ( nextProps, nextState ) {
+  //   console.log( '[UPDATE App.js] Inside shouldComponentUpdate', nextProps, nextState );
+  //   return nextState.persons !== this.state.persons ||
+  //     nextState.showPersons !== this.state.showPersons;
+  // }
+
+  componentWillUpdate ( nextProps, nextState ) {
+    console.log( '[UPDATE App.js] Inside componentWillUpdate', nextProps, nextState );
   }
-  
-  componentWillUpdate(nextProps, nextState){
-    console.log('[UPDATE App.js] Insde componentWillUpdate', nextProps, nextState);
+
+  componentDidUpdate () {
+    console.log( '[UPDATE App.js] Inside componentDidUpdate' );
   }
-  componentDidUpdate(){
-    console.log('[UPDATE App.js] Insde componentDidUpdate');
-  }
-  nameChangedHandler = (event, id ) => {
-    const personIndex = this.state.persons.findIndex(p => {
+
+  // state = {
+  //   persons: [
+  //     { id: 'asfa1', name: 'Max', age: 28 },
+  //     { id: 'vasdf1', name: 'Manu', age: 29 },
+  //     { id: 'asdf11', name: 'Stephanie', age: 26 }
+  //   ],
+  //   otherState: 'some other value',
+  //   showPersons: false
+  // }
+
+  nameChangedHandler = ( event, id ) => {
+    const personIndex = this.state.persons.findIndex( p => {
       return p.id === id;
-    });
-    console.log(personIndex);
+    } );
+
     const person = {
       ...this.state.persons[personIndex]
     };
+
+    // const person = Object.assign({}, this.state.persons[personIndex]);
+
     person.name = event.target.value;
+
     const persons = [...this.state.persons];
     persons[personIndex] = person;
-    this.setState( {persons: persons} );
+
+    this.setState( { persons: persons } );
   }
 
-  deletePersonHandler = (personIndex) => {
-     const persons = this.state.persons.slice();
-    //const persons = [...this.state.persons];
-    persons.splice(personIndex, 1);
-    this.setState({persons: persons});
+  deletePersonHandler = ( personIndex ) => {
+    // const persons = this.state.persons.slice();
+    const persons = [...this.state.persons];
+    persons.splice( personIndex, 1 );
+    this.setState( { persons: persons } );
   }
 
   togglePersonsHandler = () => {
@@ -64,33 +85,38 @@ class App extends Component {
   }
 
   render () {
-    console.log('[App.js] inside render()');
-
+    console.log( '[App.js] Inside render()' );
     let persons = null;
 
     if ( this.state.showPersons ) {
-      persons = (
-        <div>
-            <Persons clicked={this.deletePersonHandler}
-                    changed={this.nameChangedHandler} 
-                    persons={this.state.persons} />
-        </div>
-      );
-
+      persons = <Persons
+        persons={this.state.persons}
+        clicked={this.deletePersonHandler}
+        changed={this.nameChangedHandler} />;
     }
-console.log('from asdf: ' + persons);
+
     return (
-      <div className={classes.App}>
-      <button onClick={() => {this.setState({showPersons: true})}} >Show Persons</button>
-      <Cockpit showPersons={this.state.showPersons} 
-      persons={this.state.persons} 
-      Click={this.togglePersonsHandler}
-      appTitle={this.props.title}
-      />
-        {persons}
-      </div>
+      // <div className={classes.App}>
+      //   <button onClick={() => { this.setState( { showPersons: true } ) }}>Show Persons</button>
+      //   <Cockpit
+      //     appTitle={this.props.title}
+      //     showPersons={this.state.showPersons}
+      //     persons={this.state.persons}
+      //     clicked={this.togglePersonsHandler} />
+      //   {persons}
+      // </div>
+      <Aux>
+      <button onClick={() => { this.setState( { showPersons: true } ) }}>Show Persons</button>
+      <Cockpit
+        appTitle={this.props.title}
+        showPersons={this.state.showPersons}
+        persons={this.state.persons}
+        clicked={this.togglePersonsHandler} />
+      {persons}
+    </Aux>
     );
     // return React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Does this work now?'));
   }
 }
-export default App;
+
+export default withClass(App, classes.App);

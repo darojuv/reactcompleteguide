@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import Person from './Person/Person';
 
-class Persons extends Component {
+class Persons extends PureComponent {
     constructor(props){
       super(props);
     console.log('[Persons.js] in side Constructor', props);
@@ -19,13 +19,13 @@ class Persons extends Component {
     componentWillReceiveProps(nextProps){
       console.log('[UPDATE Persons.js] Insde componentWillReceiveProps', nextProps);
      }
-    shouldComponentUpdate(nextProps, nextState){
-      console.log('[UPDATE Persons.js] Insde shouldComponentUpdate', nextProps, nextState);
-      return nextProps.persons !== this.props.persons || 
-      nextProps.changed !== this.props.changed ||
-      nextProps.clicked !== this.props.clicked;
-      //return true;
-    }
+    // shouldComponentUpdate(nextProps, nextState){
+    //   console.log('[UPDATE Persons.js] Insde shouldComponentUpdate', nextProps, nextState);
+    //   return nextProps.persons !== this.props.persons || 
+    //   nextProps.changed !== this.props.changed ||
+    //   nextProps.clicked !== this.props.clicked;
+    //   //return true;
+    // }
     
     componentWillUpdate(nextProps, nextState){
       console.log('[UPDATE Persons.js] Insde componentWillUpdate', nextProps, nextState);
