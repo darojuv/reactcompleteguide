@@ -2,7 +2,7 @@ import React from 'react';
 
 import classes from './Cockpit.css';
 import Aux from '../../hoc/Aux';
-import withClass from '../../hoc/withClass';
+
 const cockpit = ( props ) => {
     let assignedClasses = [];
     let btnClass = classes.Button;
@@ -28,4 +28,4 @@ const cockpit = ( props ) => {
     );
 };
 
-export default withClass(cockpit, props);
+export default cockpit;

@@ -8,9 +8,9 @@ import React, {Component} from 'react';
 
 const withClass = (WrappedComponent, className) => {
    return class extends Component{
-       render(props){
+       render(){
             return (<div className={className}>
-                <WrappedComponent {...props} />
+                <WrappedComponent {...this.props} />
             </div>)
        }
    } 
